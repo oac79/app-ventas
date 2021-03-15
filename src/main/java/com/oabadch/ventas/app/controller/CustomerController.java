@@ -2,6 +2,8 @@ package com.oabadch.ventas.app.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +43,12 @@ public class CustomerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Customer> create(@RequestBody Customer customer){
+	public ResponseEntity<Customer> create(@Valid @RequestBody Customer customer){
 		return new ResponseEntity<>(customerService.create(customer), HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<Customer> update(@RequestBody Customer customer){
+	public ResponseEntity<Customer> update(@Valid @RequestBody Customer customer){
 		return customerService.findById(customer.getIdCustomer())
 				.map(c -> ResponseEntity.ok(customerService.update(customer)))
 				.orElseGet(() -> ResponseEntity.notFound().build());
